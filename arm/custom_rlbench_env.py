@@ -28,10 +28,13 @@ class CustomRLBenchEnv(RLBenchEnv):
                  channels_last: bool = False,
                  reward_scale=100.0,
                  headless: bool = True,
-                 time_in_state: bool = False):
+                 time_in_state: bool = False,
+                 robot_name: str = 'panda',
+                 random_seed: int = None
+                 ):
         super(CustomRLBenchEnv, self).__init__(
             task_class, observation_config, action_mode, dataset_root,
-            channels_last, headless=headless)
+            channels_last, headless=headless, robot_setup=robot_name, random_seed=random_seed)
         self._reward_scale = reward_scale
         self._episode_index = 0
         self._record_current_episode = False
@@ -128,14 +131,18 @@ class CustomRLBenchEnv(RLBenchEnv):
             obs, reward, terminal = self._task.step(action)
             if reward >= 1:
                 success = True
+                # print("Success!")
                 reward *= self._reward_scale
             else:
                 reward = 0.0
             obs = self.extract_obs(obs)
             self._previous_obs_dict = obs
+            # if terminal:
+                # print("Terminal")
         except (IKError, ConfigurationPathError, InvalidActionError) as e:
             terminal = True
             reward = 0.0
+            print(e)
 
         summaries = []
         self._i += 1

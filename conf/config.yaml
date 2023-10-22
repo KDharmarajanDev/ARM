@@ -1,9 +1,9 @@
 rlbench:
     task: take_lid_off_saucepan
     demos: 10
-    demo_path: /my/demo/path
+    demo_path: /home/lawrence/xembody/ARM/demos_all
     episode_length: 10
-    cameras: [front]
+    cameras: [front] #, left_shoulder, right_shoulder, wrist]
     camera_resolution: [128, 128]
     scene_bounds: [-0.3, -0.5, 0.6, 0.7, 0.5, 1.6]
 
@@ -26,7 +26,7 @@ framework:
     training_iterations: 40000
     gpu: 0
     env_gpu: 0
-    logdir: '/tmp/arm_test/'
+    logdir: '/home/lawrence/xembody/ARM/logs'
     seeds: 1
 
 defaults:
